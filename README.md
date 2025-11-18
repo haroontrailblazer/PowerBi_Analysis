@@ -1,6 +1,9 @@
 # 🌟 User Social Media Analysis with Power BI
 
-Welcome to the **User Social Media Analysis** repository! This project leverages the power of **Microsoft Power BI** to analyze and visualize user engagement patterns, social media metrics, and other key insights from social platforms. 📊✨
+Welcome to the **User Social Media Analysis** repository! This project leverages the power of **Microsoft Power BI** to analyze and visualize user engagement patterns, social media metrics, and other key insights from social platforms.
+<br>
+<br>
+![Social media Behavioral analysis-1](https://github.com/user-attachments/assets/c8e06a3b-86c3-418e-abfc-ceb664acc04a)
 
 ---
 
