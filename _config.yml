@@ -7,7 +7,6 @@ plugins:
   - jekyll-remote-theme
 
 # Build settings
-markdown: markdown
 highlighter: rouge
 
 # Include README as homepage
