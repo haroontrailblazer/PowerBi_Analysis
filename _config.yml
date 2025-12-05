@@ -12,4 +12,3 @@ highlighter: rouge
 # Include README as homepage
 include:
   - README.md
-  - favicon.ico
