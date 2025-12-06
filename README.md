@@ -1,6 +1,6 @@
-# User Social Media Analysis with Power BI
+# Social Media User Engagement Analysis Dashboard (Power BI)
 
-Welcome to the **User Social Media Analysis** repository! This project leverages the power of **Microsoft Power BI** to analyze and visualize user engagement patterns, social media metrics, and other key insights from social platforms.
+This Power BI dashboard analyzes cross-platform social media engagement to help brands understand user behavior, content performance, and audience metrics. The project includes data preprocessing, KPI creation using DAX formulas, and the design of an interactive multi-page dashboard.
 <br>
 <br>
 
