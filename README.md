@@ -1,6 +1,7 @@
 # Social Media User Engagement Analysis Dashboard (Power BI)
 
 This Power BI dashboard analyzes cross-platform social media engagement to help brands understand user behavior, content performance, and audience metrics. The project includes data preprocessing, KPI creation using DAX formulas, and the design of an interactive dashboard.
+
 <br>
 <br>
 
@@ -41,6 +42,7 @@ This Power BI dashboard analyzes cross-platform social media engagement to help 
 
 ---
 <br>
+
 ## 2. Likes by Platform
 ### **Description**
   • The chart showcases the number of likes received on the same four platforms.
@@ -52,6 +54,7 @@ This Power BI dashboard analyzes cross-platform social media engagement to help 
 
 ---
 <br>
+
 ## 3. Views by Platform
 ### **Description**
   • This chart compares the number of views received on YouTube, TikTok, Instagram, and Twitter.
@@ -63,6 +66,7 @@ This Power BI dashboard analyzes cross-platform social media engagement to help 
 
 ---
 <br>
+
 ## 4. Comments by Platform
 ### **Description**
   • This chart measures the number of comments across the four platforms.
@@ -74,6 +78,7 @@ This Power BI dashboard analyzes cross-platform social media engagement to help 
 
 ---
 <br>
+
 ## 5. Engagement Level on Content Type over Multiple Platforms
 ### **Description**
   • This bar chart examines how various content types (Live Stream, Post, Reel, Shorts, Tweet, Video) perform in terms of engagement across YouTube, TikTok, Instagram, and Twitter.
@@ -85,6 +90,7 @@ This Power BI dashboard analyzes cross-platform social media engagement to help 
 
 ---
 <br>
+
 ## 6. Views by Region
 ### **Description**
   • This pie chart reveals the percentage of views from various regions.
@@ -96,6 +102,7 @@ This Power BI dashboard analyzes cross-platform social media engagement to help 
 
 ---
 <br>
+
 # Overall Insight
   • The data collectively emphasizes YouTube's dominance across user engagement metrics like shares, likes, views, and comments.  
   • It also showcases a relatively uniform engagement across content types and highlights regional differences in user activity.
