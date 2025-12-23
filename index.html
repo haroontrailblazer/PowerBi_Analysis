@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Social Media User Engagement Analysis Dashboard (Power BI)</title>
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+
+  <style>
+    :root {
+      --bg-main: #0b0b0b;
+      --bg-card: #141414;
+      --bg-border: #2a2a2a;
+      --text-main: #e5e5e5;
+      --text-muted: #b5b5b5;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "Inter", sans-serif;
+    }
+
+    body {
+      background: var(--bg-main);
+      color: var(--text-main);
+      line-height: 1.75;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 2rem 1.2rem;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    header h1 {
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 700;
+      color: #f5f5f5;
+      margin-bottom: 0.8rem;
+    }
+
+    header p {
+      color: var(--text-muted);
+      max-width: 900px;
+      margin: auto;
+      font-size: 0.95rem;
+    }
+
+    video {
+      display: block;
+      margin: 2.5rem auto 3.5rem;
+      width: 100%;
+      max-width: 840px;
+      border-radius: 14px;
+      border: 1px solid var(--bg-border);
+      box-shadow: 0 0 25px rgba(255,255,255,0.08);
+    }
+
+    hr {
+      border: none;
+      height: 1px;
+      background: linear-gradient(to right, transparent, #3a3a3a, transparent);
+      margin: 3rem 0;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: #f1f1f1;
+    }
+
+    h3 {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+      color: #eaeaea;
+    }
+
+    p {
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      font-size: 0.92rem;
+    }
+
+    ul {
+      margin-left: 1.2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    li {
+      margin-bottom: 0.6rem;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--bg-border);
+      border-radius: 16px;
+      padding: 1.6rem;
+      margin-bottom: 2.2rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 35px rgba(0,0,0,0.6);
+    }
+
+    /* Author Card */
+    .author-card {
+      background: #1d191913;
+      color: #111;
+      border-radius: 20px;
+      padding: 2rem;
+      max-width: 720px;
+      margin: 5rem auto 2rem;
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+    }
+
+    .author-card img {
+      width: 90px;
+      height: 90px;
+      border-radius: 20%;
+      object-fit: cover;
+      border: 3px solid #444;
+    }
+
+    .author-card h3 {
+      margin-bottom: 0.3rem;
+      font-size: 1.2rem;
+      color:#9a9a9a
+    }
+
+    .author-card p {
+      font-size: 0.9rem;
+      color: #615d5d;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      font-size: 0.8rem;
+      color: #9a9a9a;
+      border-top: 1px solid var(--bg-border);
+    }
+
+    .download-btn-wrapper {
+      text-align: center;
+      margin: -1.5rem 0 3.5rem;
+    }
+
+    .download-btn {
+      display: inline-block;
+      padding: 0.8rem 1.6rem;
+      border-radius: 10px;
+      background: #1f1f1f;
+      color: #f5f5f5;
+      font-size: 0.85rem;
+      font-weight: 500;
+      text-decoration: none;
+      border: 1px solid #3a3a3a;
+      transition: all 0.3s ease;
+    }
+
+    .download-btn:hover {
+      align-items: center;
+      background: #2a2a2a;
+      border-color: #5a5a5a;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    }
+
+    footer a {
+      color: #b5b5b5;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    footer a:hover {
+      color: #ffffff;
+   }
+
+
+    @media (max-width: 600px) {
+      .author-card {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <header>
+    <h2><i>Social Media User Engagement Analysis Dashboard (Power BI)</i></h2>
+    <p>
+      <i>This Power BI dashboard analyzes cross-platform social media engagement to help brands understand user behavior, content performance, and audience metrics. The project includes data preprocessing, KPI creation using DAX formulas, and the design of an interactive dashboard.</i>
+    </p>
+  </header>
+
+  <video src="images/powerbi analysis.mp4" controls></video>
+
+  <div class="download-btn-wrapper">
+    <a 
+        href="YOUR_POWER_BI_FILE_LINK.pbix" 
+        download
+        class="download-btn">
+        Download Power BI File (.pbix)
+    </a>
+  </div>
+
+  <hr>
+
+  <h2>Project Highlights</h2>
+  <ul>
+    <li><strong>Interactive Dashboards</strong>: Explore intuitive Power BI dashboards to uncover social media trends.</li>
+    <li><strong>Key Metrics</strong>: Analyze user behaviors, engagement rates, and growth patterns.</li>
+    <li><strong>Custom Visualizations</strong>: Professionally designed visuals tailored for social media insights.</li>
+    <li><strong>Data-Driven Decision Making</strong>: Turn raw social media data into actionable insights.</li>
+  </ul>
+
+  <hr>
+
+  <h2>Technology Stack</h2>
+  <ul>
+    <li><strong>Power BI</strong>: Primary tool for data modeling, analysis, and visualization.</li>
+    <li><strong>Data Sources</strong>: Social media APIs, CSV, Excel.</li>
+    <li><strong>Integration</strong>: Seamless connection between raw data and Power BI dashboards.</li>
+  </ul>
+
+  <hr>
+
+  <h2>Analytics</h2>
+
+  <div class="card">
+    <h3>1. Shares by Platform</h3>
+
+    <p><strong>Description:</strong> This bar chart represents the number of shares on YouTube, TikTok, Instagram, and Twitter.</p>
+
+    <p><strong>Analysis:</strong></p>
+    <ul>
+        <li>YouTube leads with 1324 shares, making it the most frequently shared platform.</li>
+        <li>TikTok follows closely with 1260 shares.</li>
+        <li>Instagram and Twitter trail behind with 1212 and 1204 shares, respectively.</li>
+        <li>This highlights YouTube’s dominance in encouraging users to share content, possibly due to its diverse range of videos that cater to varied audiences.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>2. Likes by Platform</h3>
+
+    <p><strong>Description:</strong> The chart showcases the number of likes received on the same four platforms.</p>
+
+    <p><strong>Analysis:</strong></p>
+    <ul>
+        <li>YouTube again takes the lead with 1324 likes, mirroring its performance in shares.</li>
+        <li>TikTok remains second with 1260 likes, followed by Instagram (1212 likes) and Twitter (1204 likes).</li>
+        <li>The consistency between shares and likes suggests a strong correlation between the two metrics, emphasizing YouTube’s popularity in driving audience appreciation.</li>
+    </ul>
+  </div>
+
+  
+  <div class="card">
+    <h3>3. Views by Platform</h3>
+
+    <p><strong>Description:</strong> Comparison of views across platforms.</p>
+
+    <p><strong>Analysis:</strong></p>
+    <ul>
+        <li>YouTube tops with 1324 views, driven by longer-form video consumption.</li>
+        <li>TikTok comes second (1260 views), followed by Instagram (1212 views) and Twitter (1204 views).</li>
+        <li>The high number of views on YouTube could be due to its longer format videos, which might engage viewers for extended periods.</li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h3>4. Comments by Platform</h3>
+
+    <p><strong>Description:</strong> This chart measures the number of comments across the four platforms.</p>
+
+    <p><strong>Analysis:</strong></p>
+    <ul>
+        <li>YouTube leads once more with 1324 comments, indicating high audience interaction.</li>
+        <li>TikTok follows at 1260, Instagram at 1212, and Twitter at 1204 comments.</li>
+        <li>The elevated comment count on YouTube may reflect its focus on discussion and engagement through comment threads.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>5.  Engagement Level on Content Type over Multiple Platforms</h3>
+
+    <p><strong>Description:</strong> This bar chart examines how various content types (Live Stream, Post, Reel, Shorts, Tweet, Video) perform in terms of engagement across YouTube, TikTok, Instagram, and Twitter.</p>
+
+    <p><strong>Analysis:</strong></p>
+    <ul>
+        <li>Engagement levels are relatively similar across all platforms and content types, ranging between 0.17K to 0.23K.</li>
+        <li>There doesn’t appear to be a significant variance in interaction between different content types, suggesting a uniform appeal to audiences.</li>
+        <li>This consistency implies that the platforms have a balanced approach to promoting different content formats.</li>
+    </ul>
+  </div>
+
+
+  <div class="card">
+    <h3>6. Views by Region</h3>
+
+    <p><strong>Description:</strong> This pie chart reveals the percentage of views from various regions.</p>
+
+    <p><strong>Analysis:</strong></p>
+    <ul>
+        <li>Germany has the highest percentage of views at 13.54%, closely followed by Japan (13.16%) and Australia (12.94%).</li>
+        <li>India contributes 12.82% of the views, while Brazil (12.34%), the UK (12.04%), Canada (11.84%), and the USA (11.32%) are slightly lower.</li>
+        <li>The high numbers for Germany and Japan suggest strong user bases in these regions, perhaps due to regional content appeal or greater platform penetration.</li>
+    </ul>
+  </div>
+
+
+  <hr>
+
+  <h2>Overall Insight</h2>
+  <ul>
+    <li>The data collectively emphasizes YouTube’s dominance across user engagement metrics like shares, likes, views, and comments</li>
+    <li>It also showcases a relatively uniform engagement across content types and highlights regional differences in user activity.</li>
+  </ul>
+
+  <!-- Author Card -->
+  <div class="author-card">
+    <img src="images/Haroon_K.M.jpg" alt="Author">
+    <div>
+      <h3>Haroon K.M</h3>
+      <p>
+        <i>AI-Developer</i> <br> Specializing in Power BI analytics,
+        AI-driven insights, and scalable data solutions.
+      </p>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  © 2025 · 
+  <a href="https://github.com/haroontrailblazer" target="_blank">GitHub</a> ·
+  <a href="https://www.linkedin.com/in/haroon-k-m144" target="_blank">LinkedIn</a> ·
+  <a href="https://www.instagram.com/hendrix__trailblazer" target="_blank">Instagram</a>
+</footer>
+
+</body>
+</html>
