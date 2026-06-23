@@ -1,477 +1,378 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="author" content="Haroon K M" />
+  <meta name="description" content="A Power BI dashboard analysing 5,000 viral social-media posts — key engagement metrics and audience insights across platforms, regions, formats and hashtags." />
+  <meta name="theme-color" content="#4f6bf6" />
+  <title>Haroon K M · Viral Social-Media Engagement Analysis (Power BI)</title>
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- SEO Meta Tags -->
-  <meta name="author" content="@haroontrailblazer (Haroon K M)">
-  <meta name="keywords" content="haroontrailblazer, Haroon K M, Power BI, Social Media Analysis, Data Analytics Dashboard, KPI, DAX, Visualization">
-  <meta name="description" content="Power BI dashboard analyzing cross-platform social media user engagement with KPIs, DAX measures, and interactive visualizations.">
-  
-  <title>Haroon K M | @haroontrailblazer | Social Media User Engagement Analysis Dashboard (Power BI)</title>
-
-  <!-- Font -->
-  <link rel="icon" href="images/favicon-modified.png" type="image/x-icon">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
+  <link rel="icon" href="images/favicon-modified.png" type="image/x-icon" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
   <style>
-    :root {
-      --bg-main: #0b0b0b;
-      --bg-card: #141414;
-      --bg-border: #2a2a2a;
-      --text-main: #e5e5e5;
-      --text-muted: #b5b5b5;
+    :root{
+      --bg:#ffffff; --soft:#f7f8fc; --card:#ffffff; --ink:#101729; --body:#4a5468;
+      --muted:#98a2b3; --line:#eaecf3; --accent:#4f6bf6; --accent-soft:#eef2ff; --accent-ink:#3a52d6;
+      --nav-bg:rgba(255,255,255,.82); --shadow:0 16px 44px -24px rgba(20,30,70,.32);
+      --radius:16px; --maxw:1120px;
     }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:'Inter',system-ui,sans-serif;color:var(--body);background:var(--bg);line-height:1.7;
+      -webkit-font-smoothing:antialiased;transition:background-color .4s ease,color .3s ease}
+    a{text-decoration:none;color:inherit}
+    img{max-width:100%;display:block}
+    .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+    h1,h2,h3,h4{color:var(--ink);font-weight:800;letter-spacing:-.02em;line-height:1.2}
+    .eyebrow{display:inline-block;font-size:.74rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+    section{padding:62px 0}
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: "Inter", sans-serif;
+    .btn{display:inline-flex;align-items:center;gap:.55rem;font-weight:600;font-size:.94rem;padding:.8rem 1.4rem;border-radius:10px;transition:.22s;border:1.5px solid transparent;cursor:pointer}
+    .btn-primary{background:var(--accent);color:#fff;box-shadow:0 12px 26px -12px rgba(79,107,246,.6)}
+    .btn-primary:hover{background:var(--accent-ink);transform:translateY(-2px)}
+    .btn-ghost{background:var(--card);border-color:var(--line);color:var(--ink)}
+    .btn-ghost:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
+
+    #progress{position:fixed;top:0;left:0;height:3px;width:0;z-index:60;background:linear-gradient(90deg,var(--accent),#9b8bff);transition:width .1s linear}
+
+    nav{position:sticky;top:0;z-index:40;background:var(--nav-bg);backdrop-filter:blur(12px);border-bottom:1px solid transparent;transition:border-color .3s,background-color .4s}
+    nav.scrolled{border-color:var(--line)}
+    .nav-in{display:flex;align-items:center;justify-content:space-between;height:68px}
+    .brand{display:flex;align-items:center;gap:.55rem;font-weight:800;color:var(--ink)}
+    .brand img{width:28px;height:28px;border-radius:7px}
+    .nav-right{display:flex;align-items:center;gap:18px}
+    .nav-links{display:flex;gap:24px}
+    .nav-links a{font-size:.9rem;font-weight:500;color:var(--body)}.nav-links a:hover{color:var(--ink)}
+    .nav-cta{padding:.55rem 1rem;font-size:.86rem}
+
+    /* split rows (text + image) */
+    .split{display:grid;grid-template-columns:1.04fr .96fr;gap:54px;align-items:center}
+    .split.rev .col-txt{order:2}
+    .illus{position:relative;border-radius:26px;padding:30px;background:linear-gradient(150deg,#eef2ff,#ffffff);
+      box-shadow:var(--shadow);overflow:hidden}
+    .illus::after{content:"";position:absolute;width:200px;height:200px;border-radius:50%;
+      background:radial-gradient(circle,rgba(79,107,246,.18),transparent 65%);top:-60px;right:-50px}
+    .illus img{position:relative;width:100%;max-height:360px;object-fit:contain;z-index:1}
+    .photo{border-radius:22px;overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow)}
+    .photo img{width:100%;height:100%;object-fit:cover;aspect-ratio:4/3}
+
+    /* hero */
+    .hero{position:relative;overflow:hidden;padding:74px 0 50px}
+    .blob{position:absolute;border-radius:50%;filter:blur(70px);opacity:.5;z-index:0;animation:float 16s ease-in-out infinite}
+    .blob.b1{width:340px;height:340px;background:radial-gradient(circle,var(--accent),transparent 65%);top:-110px;left:-70px}
+    .blob.b2{width:300px;height:300px;background:radial-gradient(circle,#16c79a,transparent 65%);top:-20px;right:-40px;animation-delay:-6s;opacity:.3}
+    @keyframes float{0%,100%{transform:translate(0,0)}50%{transform:translate(22px,26px)}}
+    .hero .wrap{position:relative;z-index:1}
+    .badge{display:inline-flex;align-items:center;gap:.5rem;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:.4rem .9rem;font-size:.8rem;font-weight:600;color:var(--ink);margin-bottom:22px;box-shadow:var(--shadow)}
+    .badge .dot{width:8px;height:8px;border-radius:50%;background:#16c79a;box-shadow:0 0 0 4px rgba(22,199,154,.2);animation:pulse 2s infinite}
+    @keyframes pulse{50%{box-shadow:0 0 0 7px rgba(22,199,154,0)}}
+    .hero h1{font-size:clamp(2.1rem,4.4vw,3rem);max-width:16ch}
+    .hero p{font-size:1.06rem;max-width:54ch;margin:20px 0 28px;color:var(--body)}
+    .hero-cta{display:flex;gap:14px;flex-wrap:wrap}
+    .scope{display:flex;gap:30px;flex-wrap:wrap;margin:44px auto 0;padding-top:28px;border-top:1px solid var(--line)}
+    .scope div{font-size:.76rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+    .scope b{display:block;color:var(--ink);font-size:1.45rem;font-weight:800;letter-spacing:-.02em;margin-bottom:2px}
+
+    .sec-head{text-align:center;max-width:62ch;margin:0 auto 44px}
+    .sec-head h2{font-size:clamp(1.6rem,3vw,2.1rem)}
+    .sec-head p{margin-top:12px;font-size:1.02rem}
+
+    .tag{display:inline-flex;align-items:center;gap:.45rem;font-size:.74rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.4rem .85rem;border-radius:999px;margin-bottom:16px;background:var(--accent-soft);color:var(--accent)}
+    .col-txt h2,.col-txt h3{font-size:clamp(1.5rem,2.6vw,2rem);margin-bottom:12px}
+    .f-list{list-style:none;margin:18px 0 0}
+    .f-list li{position:relative;padding-left:28px;margin-bottom:11px;font-size:.97rem;color:var(--body)}
+    .f-list li i{position:absolute;left:0;top:4px;color:var(--accent);font-size:.9rem}
+
+    /* metrics */
+    .metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .metric{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px;position:relative;overflow:hidden}
+    .metric::before{content:"";position:absolute;left:0;top:0;height:3px;width:0;background:var(--accent);transition:width .4s ease}
+    .metric:hover::before{width:100%}
+    .metric:hover{box-shadow:var(--shadow);transform:translateY(-4px)}
+    .m-ic{width:40px;height:40px;border-radius:11px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;font-size:1.05rem;margin-bottom:14px}
+    .metric .lbl{font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);font-weight:700}
+    .metric b{display:block;font-size:2.1rem;font-weight:800;color:var(--ink);letter-spacing:-.03em;font-variant-numeric:tabular-nums;margin-top:2px}
+    .metric p{font-size:.89rem;margin:8px 0 0}
+
+    /* engagement mix */
+    .mix{margin-top:26px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 24px}
+    .mix-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+    .mix-top h4{font-size:.98rem}.mix-top span{font-size:.78rem;color:var(--muted)}
+    .mix-bar{display:flex;height:14px;border-radius:7px;overflow:hidden;background:var(--soft)}
+    .mix-bar i{height:100%;width:0;transition:width 1.3s cubic-bezier(.2,.8,.2,1)}
+    .seg-l{background:var(--accent)}.seg-s{background:#16c79a}.seg-c{background:#ffb020}
+    .mix-leg{display:flex;gap:20px;flex-wrap:wrap;margin-top:12px;font-size:.84rem;color:var(--body)}
+    .mix-leg span{display:inline-flex;align-items:center;gap:.45rem}.mix-leg b{color:var(--ink)}
+    .mix-leg .d{width:10px;height:10px;border-radius:3px}
+
+    /* insights */
+    .insights{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+    .ins{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:26px;display:flex;gap:16px;transition:.25s}
+    .ins:hover{box-shadow:var(--shadow);transform:translateY(-4px);border-color:transparent}
+    .ins .n{flex:none;width:38px;height:38px;border-radius:11px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;font-weight:800}
+    .ins h4{font-size:1.1rem;margin-bottom:6px}.ins p{font-size:.95rem;margin:0}
+
+    /* report pages */
+    .pages{display:grid;gap:14px}
+    .page{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;transition:.2s}
+    .page:hover{transform:translateX(4px);border-color:var(--accent)}
+    .page .pg{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+    .page h4{margin:4px 0 4px;font-size:1.05rem}.page p{font-size:.9rem;margin:0}
+
+    .note{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:36px 40px;max-width:760px;margin:0 auto;text-align:center}
+    .note h3{font-size:1.25rem;margin-bottom:10px}.note p{font-size:1rem;color:var(--body);margin:0 auto;max-width:60ch}
+
+    .chips{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;max-width:760px;margin:0 auto}
+    .chip{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:.55rem 1.1rem;font-weight:500;font-size:.9rem;color:var(--ink);transition:.2s}
+    .chip:hover{transform:translateY(-3px);border-color:var(--accent);color:var(--accent)}
+    .chip i{margin-right:.4rem;color:var(--accent)}
+
+    .demo video{width:100%;max-width:880px;margin:0 auto;border-radius:18px;border:1px solid var(--line);box-shadow:var(--shadow)}
+
+    .cta{background:linear-gradient(135deg,#101729,#24306a);border-radius:26px;padding:18px 44px;position:relative;overflow:hidden;
+      display:grid;grid-template-columns:1.2fr .8fr;align-items:center;gap:24px}
+    .cta::after{content:"";position:absolute;inset:0;background:radial-gradient(40% 80% at 12% 10%,rgba(108,139,255,.4),transparent 55%),radial-gradient(45% 90% at 95% 95%,rgba(22,199,154,.3),transparent 55%)}
+    .cta>*{position:relative;z-index:1}
+    .cta h2{color:#fff;font-size:clamp(1.5rem,2.8vw,2.1rem)}
+    .cta p{color:#c2c9da;max-width:46ch;margin:12px 0 24px}
+    .cta-art img{width:100%;max-height:230px;object-fit:contain}
+    .cta .hero-cta a.btn-ghost{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.28);color:#fff}
+    .cta .hero-cta a.btn-ghost:hover{border-color:#fff;background:rgba(255,255,255,.16)}
+
+    footer{padding:54px 0 28px;border-top:1px solid var(--line);margin-top:18px}
+    .foot-card{display:flex;align-items:center;gap:18px;max-width:560px;margin:0 auto 26px}
+    .foot-card img{width:64px;height:64px;border-radius:14px;object-fit:cover;border:1px solid var(--line)}
+    .foot-card h3{font-size:1.08rem}.foot-card p{font-size:.9rem;color:var(--body);margin:0}
+    .foot-links{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;margin-bottom:18px}
+    .foot-links a{font-size:.9rem;font-weight:600;color:var(--body)}.foot-links a:hover{color:var(--accent)}
+    .foot-bottom{text-align:center;font-size:.82rem;color:var(--muted)}
+
+    #toTop{position:fixed;right:24px;bottom:24px;width:48px;height:48px;border-radius:14px;border:none;background:var(--accent);color:#fff;font-size:1.05rem;cursor:pointer;box-shadow:0 14px 30px -10px rgba(79,107,246,.6);opacity:0;transform:translateY(16px);pointer-events:none;transition:.3s;z-index:45}
+    #toTop.show{opacity:1;transform:none;pointer-events:auto}
+    #toTop:hover{background:var(--accent-ink);transform:translateY(-3px)}
+
+    .js .reveal{opacity:0;transform:translateY(22px);transition:opacity .65s ease,transform .65s ease}
+    .js .reveal.in{opacity:1;transform:none}
+    @media(prefers-reduced-motion:reduce){.js .reveal{opacity:1;transform:none}.blob{animation:none}}
+
+    @media(max-width:860px){
+      .split{grid-template-columns:1fr;gap:32px}.split.rev .col-txt{order:0}.col-img{order:-1}
+      .metrics{grid-template-columns:1fr 1fr}.insights{grid-template-columns:1fr}
+      .cta{grid-template-columns:1fr;text-align:center}.cta-art{display:none}.cta .hero-cta{justify-content:center}
+      .nav-links{display:none}
     }
-
-    body {
-      background: var(--bg-main);
-      color: var(--text-main);
-      line-height: 1.75;
-    }
-
-    .container {
-      max-width: 1100px;
-      margin: auto;
-      padding: 2rem 1.2rem;
-    }
-
-    header {
-      text-align: center;
-      margin-bottom: 3rem;
-    }
-
-    header h1 {
-      font-size: clamp(1.8rem, 4vw, 2.6rem);
-      font-weight: 700;
-      color: #f5f5f5;
-      margin-bottom: 0.8rem;
-    }
-
-    header p {
-      color: var(--text-muted);
-      max-width: 900px;
-      margin: auto;
-      font-size: 0.95rem;
-    }
-
-    video {
-      display: block;
-      margin: 2.5rem auto 3.5rem;
-      width: 100%;
-      max-width: 840px;
-      border-radius: 14px;
-      border: 1px solid var(--bg-border);
-      box-shadow: 0 0 25px rgba(255,255,255,0.08);
-    }
-
-    hr {
-      border: none;
-      height: 1px;
-      background: linear-gradient(to right, transparent, #3a3a3a, transparent);
-      margin: 3rem 0;
-    }
-
-    h2 {
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
-      color: #f1f1f1;
-    }
-
-    h3 {
-      font-size: 1rem;
-      margin-bottom: 0.5rem;
-      color: #eaeaea;
-    }
-
-    p {
-      color: var(--text-muted);
-      margin-bottom: 1rem;
-      font-size: 0.92rem;
-    }
-
-    ul {
-      margin-left: 1.2rem;
-      margin-bottom: 1.5rem;
-    }
-
-    li {
-      margin-bottom: 0.6rem;
-      color: var(--text-muted);
-      font-size: 0.9rem;
-    }
-
-    .card {
-      background: var(--bg-card);
-      border: 1px solid var(--bg-border);
-      border-radius: 16px;
-      padding: 1.6rem;
-      margin-bottom: 2.2rem;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 35px rgba(0,0,0,0.6);
-    }
-
-    /* Author Card */
-    .author-card {
-      background: #1d191913;
-      color: #111;
-      border-radius: 20px;
-      padding: 2rem;
-      max-width: 720px;
-      margin: 5rem auto 2rem;
-      display: flex;
-      gap: 1.5rem;
-      align-items: center;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.4);
-    }
-
-    .author-card img {
-      width: 90px;
-      height: 90px;
-      border-radius: 20%;
-      object-fit: cover;
-      border: 3px solid #444;
-    }
-
-    .author-card h3 {
-      margin-bottom: 0.3rem;
-      font-size: 1.2rem;
-      color:#9a9a9a
-    }
-
-    .author-card p {
-      font-size: 0.9rem;
-      color: #615d5d;
-    }
-
-    .header-icon{
-      width: 48px;          /* adjust size */
-      height: auto;
-      margin: 10px auto;    /* space above and below */
-      display: block;      /* center align */
-      opacity: 0.9;
-    }
-
-
-    footer {
-      text-align: center;
-      padding: 2rem 1rem;
-      font-size: 0.8rem;
-      color: #9a9a9a;
-      border-top: 1px solid var(--bg-border);
-    }
-
-    .download-btn-wrapper {
-      text-align: center;
-      margin: -1.5rem 0 3.5rem;
-    }
-
-    .download-btn {
-      display: inline-block;
-      padding: 0.8rem 1.6rem;
-      border-radius: 10px;
-      background: #1f1f1f;
-      color: #f5f5f5;
-      font-size: 0.85rem;
-      font-weight: 500;
-      text-decoration: none;
-      border: 1px solid #3a3a3a;
-      transition: all 0.3s ease;
-    }
-
-    .download-btn:hover {
-      align-items: center;
-      background: #2a2a2a;
-      border-color: #5a5a5a;
-      transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-    }
-
-    footer a {
-      color: #b5b5b5;
-      text-decoration: none;
-      font-weight: 500;
-      transition: color 0.2s ease;
-    }
-
-    footer a:hover {
-      color: #ffffff;
-   }
-
-    /* =========================
-       Mobile Optimization
-       ========================= */
-    @media (max-width: 768px) {
-    
-      body {
-        line-height: 1.6;
-      }
-    
-      .container {
-        padding: 1.5rem 1rem;
-      }
-    
-      header h1 {
-        font-size: 2.1rem;
-        line-height: 1.3;
-        text-align: left;
-      }
-    
-      header p {
-        font-size: 0.99rem;
-        text-align: left;
-      }
-    
-      video {
-        margin: 1.8rem auto 2.5rem;
-        border-radius: 12px;
-      }
-    
-      h2 {
-        font-size: 1.25rem;
-      }
-    
-      h3 {
-        font-size: 0.95rem;
-      }
-    
-      p, li {
-        font-size: 0.88rem;
-      }
-    
-      ul {
-        margin-left: 1rem;
-      }
-    
-      .card {
-        padding: 1.2rem;
-        border-radius: 14px;
-      }
-    
-      .download-btn {
-        width: 100%;
-        max-width: 320px;
-        padding: 0.9rem;
-        font-size: 0.85rem;
-      }
-    
-      .download-btn-wrapper {
-        margin: -1rem 0 2.5rem;
-      }
-    
-      .author-card {
-        flex-direction: column;
-        text-align: center;
-        padding: 1.5rem;
-        gap: 1rem;
-      }
-    
-      .author-card img {
-        width: 80px;
-        height: 80px;
-      }
-    
-      footer {
-        font-size: 0.75rem;
-        padding: 1.5rem 0.8rem;
-      }
-    }
-    
-    /* Extra small devices */
-    @media (max-width: 420px) {
-    
-      header h1 {
-        font-size: 2.1rem;
-      }
-    
-      h2 {
-        font-size: 1.15rem;
-      }
-    
-      .card {
-        padding: 1rem;
-      }
-    }
-
+    @media(max-width:520px){.metrics{grid-template-columns:1fr}.scope{gap:18px}}
   </style>
 </head>
-
 <body>
-<br>
-<div class="container">
+  <div id="progress"></div>
 
-  <header>
-    <h1>Social Media User Engagement Analysis<br>PowerBI</h1>
-    <p>
-      <i>This Power BI dashboard analyzes cross-platform social media engagement to help brands understand user behavior, content performance, and audience metrics. The project includes data preprocessing, KPI creation using DAX formulas, and the design of an interactive dashboard.</i>
-    </p>
+  <nav id="nav">
+    <div class="wrap nav-in">
+      <a class="brand" href="#top"><img src="images/newlogo.png" alt="logo" /> Haroon&nbsp;K&nbsp;M</a>
+      <div class="nav-right">
+        <div class="nav-links">
+          <a href="#metrics">Metrics</a><a href="#about">About</a><a href="#insights">Insights</a><a href="#report">Report</a>
+        </div>
+        <a class="btn btn-primary nav-cta" href="source/Users_Analysis.pbix" download><i class="fas fa-download"></i> Get the file</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero" id="top">
+    <span class="blob b1"></span><span class="blob b2"></span>
+    <div class="wrap">
+      <div class="split">
+        <div class="col-txt">
+          <span class="badge reveal"><span class="dot"></span> Power BI · Data Analysis Case Study</span>
+          <h1 class="reveal">Viral Social-Media Engagement Analysis</h1>
+          <p class="reveal">An interactive Power BI report analysing <strong>5,000 viral social-media posts</strong> across four platforms, eight regions, six content formats and ten hashtags — turning raw engagement data into clear, decision-ready insights.</p>
+          <div class="hero-cta reveal">
+            <a class="btn btn-primary" href="source/Users_Analysis.pbix" download><i class="fas fa-download"></i> Download the dashboard</a>
+            <a class="btn btn-ghost" href="https://github.com/haroon-k-m" target="_blank"><i class="fab fa-github"></i> View on GitHub</a>
+          </div>
+        </div>
+        <div class="col-img reveal">
+          <div class="illus"><img src="images/stock/il-presentation.svg" alt="Presenting analytics" /></div>
+        </div>
+      </div>
+      <div class="scope reveal">
+        <div><b data-to="4">4</b>Platforms</div>
+        <div><b data-to="8">8</b>Regions</div>
+        <div><b data-to="6">6</b>Formats</div>
+        <div><b data-to="10">10</b>Hashtags</div>
+        <div><b data-to="5000" data-comma="1">5,000</b>Posts</div>
+      </div>
+    </div>
   </header>
 
-  <video src="images/powerbi analysis.mp4" controls autoplay loop></video>
-
-  <div class="download-btn-wrapper">
-    <a 
-        href="source/Users_Analysis.pbix" 
-        download
-        class="download-btn">
-        Download PowerBI File
-    </a>
-  </div>
-
-  <hr>
-
-  <h2>Project Highlights</h2>
-  <ul>
-    <li><strong>Interactive Dashboards</strong>: Explore intuitive Power BI dashboards to uncover social media trends.</li>
-    <li><strong>Key Metrics</strong>: Analyze user behaviors, engagement rates, and growth patterns.</li>
-    <li><strong>Custom Visualizations</strong>: Professionally designed visuals tailored for social media insights.</li>
-    <li><strong>Data-Driven Decision Making</strong>: Turn raw social media data into actionable insights.</li>
-  </ul>
-
-  <hr>
-
-  <h2>Technology Stack</h2>
-  <ul>
-    <li><strong>Power BI</strong>: Primary tool for data modeling, analysis, and visualization.</li>
-    <li><strong>Data Sources</strong>: Social media APIs, CSV, Excel.</li>
-    <li><strong>Integration</strong>: Seamless connection between raw data and Power BI dashboards.</li>
-  </ul>
-
-  <hr>
-
-  <h2>Analytics</h2>
-
-  <div class="card">
-    <h3>1. Shares by Platform</h3>
-
-    <p><strong>Description:</strong> This bar chart represents the number of shares on YouTube, TikTok, Instagram, and Twitter.</p>
-
-    <p><strong>Analysis:</strong></p>
-    <ul>
-        <li>YouTube leads with 1324 shares, making it the most frequently shared platform.</li>
-        <li>TikTok follows closely with 1260 shares.</li>
-        <li>Instagram and Twitter trail behind with 1212 and 1204 shares, respectively.</li>
-        <li>This highlights YouTube’s dominance in encouraging users to share content, possibly due to its diverse range of videos that cater to varied audiences.</li>
-    </ul>
-  </div>
-
-  <div class="card">
-    <h3>2. Likes by Platform</h3>
-
-    <p><strong>Description:</strong> The chart showcases the number of likes received on the same four platforms.</p>
-
-    <p><strong>Analysis:</strong></p>
-    <ul>
-        <li>YouTube again takes the lead with 1324 likes, mirroring its performance in shares.</li>
-        <li>TikTok remains second with 1260 likes, followed by Instagram (1212 likes) and Twitter (1204 likes).</li>
-        <li>The consistency between shares and likes suggests a strong correlation between the two metrics, emphasizing YouTube’s popularity in driving audience appreciation.</li>
-    </ul>
-  </div>
-
-  
-  <div class="card">
-    <h3>3. Views by Platform</h3>
-
-    <p><strong>Description:</strong> Comparison of views across platforms.</p>
-
-    <p><strong>Analysis:</strong></p>
-    <ul>
-        <li>YouTube tops with 1324 views, driven by longer-form video consumption.</li>
-        <li>TikTok comes second (1260 views), followed by Instagram (1212 views) and Twitter (1204 views).</li>
-        <li>The high number of views on YouTube could be due to its longer format videos, which might engage viewers for extended periods.</li>
-    </ul>
-  </div>
-
-
-  <div class="card">
-    <h3>4. Comments by Platform</h3>
-
-    <p><strong>Description:</strong> This chart measures the number of comments across the four platforms.</p>
-
-    <p><strong>Analysis:</strong></p>
-    <ul>
-        <li>YouTube leads once more with 1324 comments, indicating high audience interaction.</li>
-        <li>TikTok follows at 1260, Instagram at 1212, and Twitter at 1204 comments.</li>
-        <li>The elevated comment count on YouTube may reflect its focus on discussion and engagement through comment threads.</li>
-    </ul>
-  </div>
-
-  <div class="card">
-    <h3>5.  Engagement Level on Content Type over Multiple Platforms</h3>
-
-    <p><strong>Description:</strong> This bar chart examines how various content types (Live Stream, Post, Reel, Shorts, Tweet, Video) perform in terms of engagement across YouTube, TikTok, Instagram, and Twitter.</p>
-
-    <p><strong>Analysis:</strong></p>
-    <ul>
-        <li>Engagement levels are relatively similar across all platforms and content types, ranging between 0.17K to 0.23K.</li>
-        <li>There doesn’t appear to be a significant variance in interaction between different content types, suggesting a uniform appeal to audiences.</li>
-        <li>This consistency implies that the platforms have a balanced approach to promoting different content formats.</li>
-    </ul>
-  </div>
-
-
-  <div class="card">
-    <h3>6. Views by Region</h3>
-
-    <p><strong>Description:</strong> This pie chart reveals the percentage of views from various regions.</p>
-
-    <p><strong>Analysis:</strong></p>
-    <ul>
-        <li>Germany has the highest percentage of views at 13.54%, closely followed by Japan (13.16%) and Australia (12.94%).</li>
-        <li>India contributes 12.82% of the views, while Brazil (12.34%), the UK (12.04%), Canada (11.84%), and the USA (11.32%) are slightly lower.</li>
-        <li>The high numbers for Germany and Japan suggest strong user bases in these regions, perhaps due to regional content appeal or greater platform penetration.</li>
-    </ul>
-  </div>
-
-
-  <hr>
-
-  <h2>Overall Insight</h2>
-  <ul>
-    <li>The data collectively emphasizes YouTube’s dominance across user engagement metrics like shares, likes, views, and comments</li>
-    <li>It also showcases a relatively uniform engagement across content types and highlights regional differences in user activity.</li>
-  </ul>
-
-  <!-- Author Card -->
-  <div class="author-card">
-    <img src="images/Haroon_K.M.jpg" alt="Author">
-    <div>
-      <h3>Author - Haroon K.M</h3>
-      <p>
-        <i>AI-Developer</i> <br> Specializing in Power BI analytics,
-        AI-driven insights, and scalable data solutions.
-      </p>
+  <!-- METRICS -->
+  <section id="metrics">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Key Metrics</span><h2>The headline numbers</h2>
+        <p>The total engagement the dataset represents, aggregated across all 5,000 posts.</p>
+      </div>
+      <div class="metrics">
+        <div class="metric reveal"><div class="m-ic"><i class="fas fa-eye"></i></div><div class="lbl">Total Views</div><b data-to="12.47" data-dec="2" data-suf="B">12.47B</b><p>Total views across every platform and region.</p></div>
+        <div class="metric reveal"><div class="m-ic"><i class="fas fa-heart"></i></div><div class="lbl">Total Likes</div><b data-to="1.26" data-dec="2" data-suf="B">1.26B</b><p>The largest engagement signal — about three-quarters of all interaction.</p></div>
+        <div class="metric reveal"><div class="m-ic"><i class="fas fa-retweet"></i></div><div class="lbl">Total Shares</div><b data-to="252.6" data-dec="1" data-suf="M">252.6M</b><p>How often content was passed on to new audiences.</p></div>
+        <div class="metric reveal"><div class="m-ic"><i class="fas fa-comment"></i></div><div class="lbl">Total Comments</div><b data-to="124.4" data-dec="1" data-suf="M">124.4M</b><p>Direct conversation generated by the content.</p></div>
+        <div class="metric reveal"><div class="m-ic"><i class="fas fa-bolt"></i></div><div class="lbl">Engagement Rate</div><b data-to="13.1" data-dec="1" data-suf="%">13.1%</b><p>Likes, shares and comments combined, as a share of views.</p></div>
+        <div class="metric reveal"><div class="m-ic"><i class="fas fa-layer-group"></i></div><div class="lbl">Posts Analysed</div><b data-to="5000" data-comma="1">5,000</b><p>Individual posts, each with platform, region, format and hashtag.</p></div>
+      </div>
     </div>
-  </div>
-    <p align="center">
-      <a href="https://codefrombasics.com/" target="_blank" style="text-decoration:none; color:inherit;">
-        <img src="images/newlogo.png" class="header-icon" alt="Code From Basics Logo">
-        <span>@ Code From Basics</span>
-      </a>
-    </p>
+  </section>
 
-</div>
+  <!-- ABOUT (image + text) -->
+  <section id="about" style="background:var(--soft)">
+    <div class="wrap">
+      <div class="split">
+        <div class="col-img reveal"><div class="illus"><img src="images/stock/il-work.svg" alt="Building the report" loading="lazy" /></div></div>
+        <div class="col-txt reveal">
+          <span class="tag"><i class="fas fa-circle-info"></i> About the dashboard</span>
+          <h2>What the report shows</h2>
+          <p>The dashboard rolls a single post-level dataset up into the views that matter to a brand — by <strong>platform, region, content format and hashtag</strong> — reporting true engagement totals alongside <strong>average performance per post</strong>, so volume and quality can be read separately.</p>
+          <ul class="f-list">
+            <li><i class="fas fa-circle-check"></i> Four core signals: views, likes, shares and comments</li>
+            <li><i class="fas fa-circle-check"></i> An overall engagement rate, plus per-post averages</li>
+            <li><i class="fas fa-circle-check"></i> Reach distribution across global markets</li>
+            <li><i class="fas fa-circle-check"></i> A clean, three-page report built for a top-down read</li>
+          </ul>
+          <div class="mix">
+            <div class="mix-top"><h4>How engagement is composed</h4><span>share of interaction</span></div>
+            <div class="mix-bar"><i class="seg-l" data-w="76.9"></i><i class="seg-s" data-w="15.5"></i><i class="seg-c" data-w="7.6"></i></div>
+            <div class="mix-leg">
+              <span><span class="d seg-l"></span>Likes <b>76.9%</b></span>
+              <span><span class="d seg-s"></span>Shares <b>15.5%</b></span>
+              <span><span class="d seg-c"></span>Comments <b>7.6%</b></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<footer>
-  © 2025 · 
-  <a href="https://github.com/haroontrailblazer" target="_blank">GitHub</a> ·
-  <a href="https://www.linkedin.com/in/haroon-k-m144" target="_blank">LinkedIn</a> ·
-  <a href="https://www.instagram.com/hendrix__trailblazer" target="_blank">Instagram</a>
-</footer>
+  <!-- INSIGHTS -->
+  <section id="insights">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Key Insights</span><h2>What the data tells us</h2>
+        <p>The most important, decision-relevant takeaways — explained plainly.</p>
+      </div>
+      <div class="insights">
+        <div class="ins reveal"><div class="n">1</div><div><h4>Reach is driven by volume, not virality</h4><p>Average views per post stay flat — around <strong>2.5 million</strong> — across every platform, format and hashtag. Total reach is mostly a function of how much a channel posts.</p></div></div>
+        <div class="ins reveal"><div class="n">2</div><div><h4>Instagram earns the strongest engagement</h4><p>At a <strong>13.8% engagement rate</strong>, Instagram turns views into likes, shares and comments more efficiently than any other platform.</p></div></div>
+        <div class="ins reveal"><div class="n">3</div><div><h4>The USA is the largest audience</h4><p>The United States accounts for <strong>14.1% of all views</strong> — the biggest single market — followed by Brazil, the UK and Canada.</p></div></div>
+        <div class="ins reveal"><div class="n">4</div><div><h4>The "engagement level" label is misleading</h4><p>Posts tagged <strong>"High"</strong> average slightly <strong>fewer</strong> views than those tagged "Low", so the label shouldn't be used to prioritise content.</p></div></div>
+        <div class="ins reveal"><div class="n">5</div><div><h4>Content format barely changes reach</h4><p>Reels, Tweets, Videos, Shorts, Live Streams and Posts all land within a <strong>couple of percent</strong> of each other on average views.</p></div></div>
+        <div class="ins reveal"><div class="n">6</div><div><h4>Likes dominate the engagement mix</h4><p>On every platform, likes make up roughly <strong>three-quarters</strong> of total engagement, with shares and comments making up the rest.</p></div></div>
+      </div>
+    </div>
+  </section>
 
+  <!-- REPORT (photo + pages) -->
+  <section id="report" style="background:var(--soft)">
+    <div class="wrap">
+      <div class="split rev">
+        <div class="col-txt reveal">
+          <span class="tag"><i class="fas fa-table-columns"></i> Inside the report</span>
+          <h2>Three pages, one story</h2>
+          <p>The dashboard is organised as a top-down narrative across three pages — built in Power BI, designed to be read by a decision-maker.</p>
+          <div class="pages" style="margin-top:18px">
+            <div class="page"><span class="pg">Page 1</span><h4>The Numbers</h4><p>Headline totals, total views by platform and region, and the engagement-level split.</p></div>
+            <div class="page"><span class="pg">Page 2</span><h4>Per-Post Performance</h4><p>Average views and likes per post, the platform-by-format breakdown, and the engagement mix.</p></div>
+            <div class="page"><span class="pg">Page 3</span><h4>Audience &amp; Findings</h4><p>Each region's share of views, top hashtags by reach, and a short analyst's note.</p></div>
+          </div>
+        </div>
+        <div class="col-img reveal"><div class="photo"><img src="images/stock/ph-analytics.jpg" alt="Analytics dashboard" loading="lazy" /></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DATASET -->
+  <section>
+    <div class="wrap">
+      <div class="note reveal">
+        <h3>The dataset</h3>
+        <p><strong>Viral_Social_Media_Trends.csv</strong> — 5,000 individual posts, each described by platform, hashtag, content format, region, engagement level, and four engagement metrics (views, likes, shares and comments). Every figure on this page is computed directly from this file.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TECH -->
+  <section>
+    <div class="wrap">
+      <div class="sec-head reveal"><span class="eyebrow">Built with</span><h2>Tools &amp; skills</h2></div>
+      <div class="chips reveal">
+        <span class="chip"><i class="fas fa-chart-pie"></i>Microsoft Power BI</span>
+        <span class="chip"><i class="fas fa-sitemap"></i>Data Modeling</span>
+        <span class="chip"><i class="fas fa-calculator"></i>KPIs &amp; Aggregation</span>
+        <span class="chip"><i class="fas fa-pen-fancy"></i>Data Storytelling</span>
+        <span class="chip"><i class="fas fa-chart-line"></i>Business Intelligence</span>
+        <span class="chip"><i class="fas fa-magnifying-glass-chart"></i>Statistical Analysis</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA (text + illustration) -->
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="cta reveal">
+        <div>
+          <h2>Explore the full dashboard</h2>
+          <p>Download the Power BI file and open it in Power BI Desktop to interact with every chart.</p>
+          <div class="hero-cta">
+            <a class="btn btn-primary" href="source/Users_Analysis.pbix" download><i class="fas fa-download"></i> Download the .pbix</a>
+            <a class="btn btn-ghost" href="https://github.com/haroon-k-m" target="_blank"><i class="fab fa-github"></i> View the repo</a>
+          </div>
+        </div>
+        <div class="cta-art"><img src="images/stock/il-rocket.svg" alt="Explore" loading="lazy" /></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="wrap">
+      <div class="foot-card reveal">
+        <img src="images/haroontrailblazer-pre-modified.png" alt="Haroon K M" />
+        <div><h3>Haroon K M</h3><p>Power BI Data Analyst — turning raw data into clear, decision-ready stories.</p></div>
+      </div>
+      <div class="foot-links">
+        <a href="https://github.com/haroon-k-m" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+        <a href="https://www.credly.com/users/haroon-k-m" target="_blank"><i class="fas fa-award"></i> Certificates</a>
+        <a href="source/Users_Analysis.pbix" download><i class="fas fa-download"></i> Download</a>
+        <a href="#top"><i class="fas fa-arrow-up"></i> Top</a>
+      </div>
+      <div class="foot-bottom">© 2026 Haroon K M · Viral Social-Media Engagement Analysis · Built with Power BI.</div>
+    </div>
+  </footer>
+
+  <button id="toTop" aria-label="Back to top"><i class="fas fa-arrow-up"></i></button>
+
+  <script>
+    document.documentElement.classList.add('js');
+
+    const nav=document.getElementById('nav'),prog=document.getElementById('progress'),toTop=document.getElementById('toTop');
+    function onScroll(){const y=scrollY,h=document.documentElement.scrollHeight-innerHeight;nav.classList.toggle('scrolled',y>10);prog.style.width=(h>0?y/h*100:0)+'%';toTop.classList.toggle('show',y>500);}
+    addEventListener('scroll',onScroll,{passive:true});onScroll();
+    toTop.addEventListener('click',()=>scrollTo({top:0,behavior:'smooth'}));
+
+    function countUp(el){const to=parseFloat(el.dataset.to),dec=+el.dataset.dec||0,suf=el.dataset.suf||'',comma=el.dataset.comma,dur=1500;let s=null;
+      const fmt=v=>comma?Math.round(v).toLocaleString():(dec>0?v.toFixed(dec):Math.round(v))+suf;
+      function step(ts){if(s===null)s=ts;const p=Math.min((ts-s)/dur,1),e=1-Math.pow(1-p,3);el.textContent=fmt(to*e);if(p<1)requestAnimationFrame(step);else el.textContent=fmt(to);}
+      requestAnimationFrame(step);}
+    const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;const el=e.target;el.classList.add('in');
+      el.querySelectorAll('[data-to]').forEach(countUp);if(el.dataset.to)countUp(el);
+      el.querySelectorAll('.mix-bar i').forEach(s=>s.style.width=s.dataset.w+'%');io.unobserve(el);}),{threshold:.16});
+    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  </script>
 </body>
 </html>

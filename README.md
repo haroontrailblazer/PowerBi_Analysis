@@ -1,7 +1,7 @@
 # <i> Social Media User Engagement Analysis Dashboard </i>
 ![1000166608](https://github.com/user-attachments/assets/a1e2a50c-1c07-4708-a469-5cfda534c612)
 
-This Power BI dashboard analyzes cross-platform social media engagement to help brands understand user behavior, content performance, and audience metrics. The project includes data preprocessing, KPI creation using DAX formulas, and the design of an interactive dashboard.
+This Power BI report analyzes **5,000 viral social-media posts** across 4 platforms, 8 regions, 6 content formats and 10 hashtags to help brands understand reach, engagement composition and audience behaviour. The 2025 revision **re-engineers the model's aggregations, corrects a metric-labelling error in the original report, and rebuilds the canvas as a 3-page executive dashboard** with verified, decision-grade insights.
 
 ---
 
@@ -45,141 +45,78 @@ Microsoft Power BI · Data Modeling · Dashboards · Data Analysis · Data Story
 
 <br>
 
-## Project Highlights
+## What's new in this revision
 
-  * **Interactive Dashboards**: Explore intuitive Power BI dashboards to uncover social media trends. <br>
-  * **Key Metrics**: Analyze user behaviors, engagement rates, and growth patterns. <br>
-  * **Custom Visualizations**: Professionally designed visuals tailored for social media insights. <br>
-  * **Data-Driven Decision Making**: Turn raw social media data into actionable insights. <br>
+> **The headline fix — counts were being charted as totals.**
+> The original report aggregated every metric with **`Count` (CountNonNull)** instead of **`Sum`**. So "Shares by Platform = 1,324" was never 1,324 shares — it was the *number of YouTube posts*. All four metric charts displayed the same four numbers (1,324 / 1,260 / 1,212 / 1,204), i.e. the post count per platform, not engagement. Re-aggregated to true sums, the story changes completely.
 
----
+| Metric | Original report (mislabelled) | Corrected total |
+| --- | --- | --- |
+| Total Views | "1,324" (post count) | **12.47 B** |
+| Total Likes | "1,324" (post count) | **1.26 B** |
+| Total Shares | "1,324" (post count) | **252.6 M** |
+| Total Comments | "1,324" (post count) | **124.4 M** |
+| Engagement Rate | — | **13.1 %** |
 
-## Technology Stack
-
-  * **Power BI**: Primary tool for data modeling, analysis, and visualization. <br>
-  * **Data Sources**: Social media APIs, CSV, Excel <br>
-  * **Integration**: Seamless connection between raw data and Power BI dashboards. <br>
-
----
-
-# Analytics
----
-
-## 1. Shares by Platform
-### <i> **Description** </i>
-  * This bar chart represents the number of shares on YouTube, TikTok, Instagram, and Twitter.
-
-### <i> **Analysis** </i>
-  * YouTube leads with 1324 shares, making it the most frequently shared platform.
-  
-    <br>
-  
-  * TikTok follows closely with 1260 shares.
-  
-    <br>
-  
-  * Instagram and Twitter trail behind with 1212 and 1204 shares, respectively.
-  
-    <br>
-  
-  * This highlights YouTube's dominance in encouraging users to share content, possibly due to its diverse range of videos that cater to varied audiences.
-
----
-<br>
-
-## 2. Likes by Platform
-### <i> **Description** </i>
-  * The chart showcases the number of likes received on the same four platforms.
-
-### <i> **Analysis** </i>
-  * YouTube again takes the lead with 1324 likes, mirroring its performance in shares.
-  
-    <br>
-  
-  * TikTok remains second with 1260 likes, followed by Instagram (1212 likes) and Twitter (1204 likes).
-  
-    <br>
-  
-  * The consistency between shares and likes suggests a strong correlation between the two metrics, emphasizing YouTube's popularity in driving audience appreciation. 
-
----
-<br>
-
-## 3. Views by Platform
-### <i> **Description** </i>
-  * This chart compares the number of views received on YouTube, TikTok, Instagram, and Twitter.
-
-### <i> **Analysis** </i>
-  * YouTube tops the chart with 1324 views, affirming its position as a widely consumed platform.
-  
-    <br>
-  
-  * TikTok comes second (1260 views), followed by Instagram (1212 views) and Twitter (1204 views).
-  
-    <br>
-  
-  * The high number of views on YouTube could be due to its longer format videos, which might engage viewers for extended periods. 
-
----
-<br>
-
-## 4. Comments by Platform
-### <i> **Description** </i>
-  * This chart measures the number of comments across the four platforms.
-
-### <i> **Analysis** </i>
-  * YouTube leads once more with 1324 comments, indicating high audience interaction.
-  
-   <br>
-  
-  * TikTok follows at 1260, Instagram at 1212, and Twitter at 1204 comments.
-  
-   <br>
-  
-  * The elevated comment count on YouTube may reflect its focus on discussion and engagement through comment threads. 
-
----
-<br>
-
-## 5. Engagement Level on Content Type over Multiple Platforms
-### <i> **Description** </i>
-  * This bar chart examines how various content types (Live Stream, Post, Reel, Shorts, Tweet, Video) perform in terms of engagement across YouTube, TikTok, Instagram, and Twitter.
-
-### <i> **Analysis** </i>
-  * Engagement levels are relatively similar across all platforms and content types, ranging between 0.17K to 0.23K.
-    
-    <br>
-    
-  * There doesn't appear to be a significant variance in interaction between different content types, suggesting a uniform appeal to audiences.
-  
-    <br>
-  
-  * This consistency implies that the platforms have a balanced approach to promoting different content formats. <br>
-
----
-<br>
-
-## 6. Views by Region
-### <i> **Description** </i>
-  * This pie chart reveals the percentage of views from various regions.
-
-### <i> **Analysis** </i>
-  * Germany has the highest percentage of views at 13.54%, closely followed by Japan (13.16%) and Australia (12.94%).
-  
-    <br>
-  
-  * India contributes 12.82% of the views, while Brazil (12.34%), the UK (12.04%), Canada (11.84%), and the USA (11.32%) are slightly lower. 
-  
-    <br>
-  
-  * The high numbers for Germany and Japan suggest strong user bases in these regions, perhaps due to regional content appeal or greater platform penetration.
+Other upgrades:
+* **Correct aggregations** — `Sum` for totals, `Average` for per-post performance, `Count` only where a count is actually meant.
+* **A 3-page executive design** — Overview → Platform & Content deep-dive → Audience, Hashtags & Findings — on a clean, MNC-grade "Executive Light" theme with KPI cards, a consistent accent palette and cross-filtering.
+* **Honest, verified storytelling** — every figure below was computed twice with independent engines (Python and PowerShell) and reconciled to the unit.
 
 ---
 
-# Overall Insight
-  * The data collectively emphasizes YouTube's dominance across user engagement metrics like shares, likes, views, and comments.
-    
-    <br>
-    
-  * It also showcases a relatively uniform engagement across content types and highlights regional differences in user activity.
-  
+## Dashboard at a glance
+
+**Page 1 · Executive Overview** — 6 headline KPIs, Total Views by Platform, Engagement Mix (Likes/Shares/Comments) by Platform, Engagement-Level split, Total Views by Region and Avg Views per Content Format.
+
+**Page 2 · Platform & Content** — per-post normalisation: Avg Views & Avg Likes per post by platform, post-volume mix, the Platform × Content-Format matrix, and avg engagement by format.
+
+**Page 3 · Audience, Hashtags & Findings** — real view share by region, top hashtags by reach, the engagement-label paradox, and an analyst's note.
+
+---
+
+# Corrected Analytics
+
+## 1. Engagement totals (the corrected KPIs)
+* The platform earns **12.47 billion views, 1.26 billion likes, 252.6 million shares and 124.4 million comments** across 5,000 posts.
+* Combined engagement (likes + shares + comments) is **1.63 billion**, an **overall engagement rate of 13.1 %** of views.
+
+## 2. Reach by Platform — volume, not virality
+* On **totals**, YouTube leads (3.37 B views) ahead of TikTok (3.17 B), Twitter (3.02 B) and Instagram (2.91 B) — **but only because YouTube carries the most posts (1,324 vs ~1,210).**
+* On a **per-post** basis the platforms are nearly identical: **2.40 M – 2.55 M views per post** (a spread of just ±3 %). Channel choice barely moves per-post reach.
+* **Instagram is the efficiency leader:** the highest engagement rate (**13.8 %**) and the highest average likes per post (257 K), despite near-fewest posts.
+
+## 3. Engagement Mix by Platform
+* Likes dominate the engagement profile on every platform (~77 % of engagement), followed by shares (~16 %) and comments (~7 %).
+* The mix is remarkably stable across platforms — there is no channel where users disproportionately *comment* or *share* rather than like.
+
+## 4. Content Format Performance
+* All six formats land within **2.47 M – 2.53 M average views** — **Reel** is marginally strongest (2.53 M) and **Post** weakest (2.47 M), a ~2 % gap.
+* Practical read: format selection is not a meaningful reach lever in this dataset; cadence and targeting matter more.
+
+## 5. Views by Region — the corrected leaderboard
+* The original pie charted **post counts**, not view sums — and its narrative mislabelled the regions: it credited "Germany" with the top 13.54 %, but **13.54 % is actually the USA's share of *posts*** (Germany in fact has the *fewest* posts, 566).
+* Ranked correctly by **total views**, the leader is the **USA (14.1 % of all views, 1.76 B)**, then Brazil (13.2 %), the UK (13.0 %) and Canada (12.9 %); Japan is last (11.5 %).
+* Regional **engagement rates are statistically flat** (12.4–13.8 %, a 1.3-point spread that is indistinguishable from chance, permutation *p* ≈ 0.21) — there is no "high-engagement market" to target in this data.
+
+## 6. Hashtags
+* By **total reach**, **#Fitness** (1.39 B views) leads — but mostly because it carries the most posts (536). Per-post reach differs by only ~7 % across all ten hashtags.
+* Apparent "like magnets" such as **#Education** and **#Tech** (~260 K avg likes) sit **within sampling noise** (*p* ≈ 0.92): no hashtag reliably out-performs another on a per-post basis.
+
+## 7. The Engagement-Level paradox
+* Posts manually tagged **"High"** engagement actually average **fewer views (2.45 M)** than **"Medium" (2.53 M)** or **"Low" (2.51 M)** posts.
+* The categorical `Engagement_Level` flag is therefore **decoupled from real reach** and should not be used to prioritise content.
+
+---
+
+# Analyst's Note — methodology & data quality
+* **Independent verification.** Every aggregate was computed with two independent engines (Python `csv` and PowerShell `Measure-Object`) and reconciled to the unit.
+* **The metrics are statistically independent.** Pairwise correlations between Views, Likes, Shares and Comments are all within **|r| < 0.02** — knowing one metric tells you nothing about another.
+* **Signature of synthetic data.** Views are near-uniform: mean (2.494 M) ≈ median (2.497 M), and the standard deviation (1.459 M) ≈ range ÷ √12. Combined with the zero correlations and the flat per-segment averages, this dataset behaves like **independently-sampled random values**, so "what makes a post go viral" is effectively a coin-flip here.
+
+## Recommendation
+Treat reach in this dataset as **volume-led**: scale posting cadence rather than chasing a "best" format, hashtag or market — per-post performance is statistically flat. The one real efficiency edge is **Instagram (13.8 % engagement rate; the platform-rate spread is significant at *p* ≈ 0.02, unlike the regional one)**, and **ignore the `Engagement Level` label** for prioritisation — it does not track actual performance.
+
+---
+
+> **Files** — `source/Users_Analysis.pbix` (redesigned report) · `source/Users_Analysis_v1_original.pbix` (original, preserved) · `source/Viral_Social_Media_Trends.csv` (dataset).
